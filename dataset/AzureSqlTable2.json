@@ -1,0 +1,88 @@
+{
+	"name": "AzureSqlTable2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "PostId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "BlogId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "PostKey",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DateCreated",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "DateEdited",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "Public",
+				"type": "bit"
+			},
+			{
+				"name": "SeriesId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Title",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ContentKey",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Tags",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CommentsEnabled",
+				"type": "bit"
+			},
+			{
+				"name": "Deleted",
+				"type": "bit"
+			},
+			{
+				"name": "DateDeleted",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "ReadTimeSeconds",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "WordCount",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "MetaDescription",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Posts"
+		}
+	}
+}
