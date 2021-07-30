@@ -17,31 +17,31 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderStoredProcedureName": "[dbo].[BlogData]",
+						"sqlReaderStoredProcedureName": "[dbo].[Sample_Procedure]",
 						"storedProcedureParameters": {
-							"Date": {
-								"type": "DateTime",
-								"value": "2021-07-08"
+							"param1": {
+								"type": "Int32",
+								"value": "22"
+							},
+							"param2": {
+								"type": "Int32",
+								"value": "23"
 							}
 						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "AzureSqlSink",
-						"writeBehavior": "insert",
-						"tableOption": "autoCreate",
-						"disableMetricsCollection": false
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings",
+							"filePattern": "arrayOfObjects"
 						}
-					}
+					},
+					"enableStaging": false
 				},
 				"inputs": [
 					{
@@ -51,7 +51,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "AzureSqlTable1",
+						"referenceName": "Json1",
 						"type": "DatasetReference"
 					}
 				]
