@@ -17,6 +17,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "Blogs"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable3",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
 				}
 			],
 			"sinks": [],
@@ -28,7 +35,7 @@
 					"name": "BlogPostView"
 				}
 			],
-			"script": "source(output(\n\t\tBlogId as integer,\n\t\tTitle as string,\n\t\tDisabled as boolean,\n\t\tDateCreated as timestamp,\n\t\tKey as string,\n\t\tDescription as string,\n\t\tImageUrl as string,\n\t\tShortTitle as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Posts\nsource(output(\n\t\tPostId as integer,\n\t\tBlogId as integer,\n\t\tPostKey as string,\n\t\tDateCreated as string,\n\t\tDateEdited as string,\n\t\tPublic as boolean,\n\t\tSeriesId as string,\n\t\tTitle as string,\n\t\tContentKey as string,\n\t\tTags as string,\n\t\tCommentsEnabled as boolean,\n\t\tDeleted as boolean,\n\t\tDateDeleted as string,\n\t\tReadTimeSeconds as integer,\n\t\tWordCount as integer,\n\t\tMetaDescription as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Blogs\nPosts, Blogs join(Posts@BlogId == Blogs@BlogId,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> BlogPosts\nBlogPosts select(mapColumn(\n\t\tBlogId = Posts@BlogId,\n\t\tDateCreated = Blogs@DateCreated,\n\t\tDateEdited,\n\t\tBlogKey = Key,\n\t\t{Blog Title} = Posts@Title,\n\t\tPostKey,\n\t\t{Post Title} = Blogs@Title,\n\t\tTags\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> BlogPostView"
+			"script": "parameters{\n\tparameter1 as string\n}\nsource(output(\n\t\tBlogId as integer,\n\t\tTitle as string,\n\t\tDisabled as boolean,\n\t\tDateCreated as timestamp,\n\t\tKey as string,\n\t\tDescription as string,\n\t\tImageUrl as string,\n\t\tShortTitle as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Posts\nsource(output(\n\t\tPostId as integer,\n\t\tBlogId as integer,\n\t\tPostKey as string,\n\t\tDateCreated as string,\n\t\tDateEdited as string,\n\t\tPublic as boolean,\n\t\tSeriesId as string,\n\t\tTitle as string,\n\t\tContentKey as string,\n\t\tTags as string,\n\t\tCommentsEnabled as boolean,\n\t\tDeleted as boolean,\n\t\tDateDeleted as string,\n\t\tReadTimeSeconds as integer,\n\t\tWordCount as integer,\n\t\tMetaDescription as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Blogs\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tprocedureName: '',\n\tresultSet: true,\n\tformat: 'procedure') ~> source1\nPosts, Blogs join(Posts@BlogId == Blogs@BlogId,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> BlogPosts\nBlogPosts select(mapColumn(\n\t\tBlogId = Posts@BlogId,\n\t\tDateCreated = Blogs@DateCreated,\n\t\tDateEdited,\n\t\tBlogKey = Key,\n\t\t{Blog Title} = Posts@Title,\n\t\tPostKey,\n\t\t{Post Title} = Blogs@Title,\n\t\tTags\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> BlogPostView"
 		}
 	}
 }
