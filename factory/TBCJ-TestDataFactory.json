@@ -1,0 +1,9 @@
+{
+	"name": "TBCJ-TestDataFactory",
+	"location": "uksouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "8682272c-399c-4518-bda7-1305d9e1b236",
+		"tenantId": "792b61f5-770f-44e3-bc02-a21a6f8f3dda"
+	}
+}
